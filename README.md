@@ -1,7 +1,5 @@
 # decamp
 
-# React project is not wired up to new contract interfaces yet and will not function correctly if latest abi's are inserted. 
-
 ### decentralizing work
 
 ### Open Source Common Good Liqudity Pools for People
