@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef, useReducer } from "react";
 import Navbar from 'react-bootstrap/Navbar';
-import ABI from '../web3/abi.json';
 import Nav from 'react-bootstrap/Nav';
 import Container from 'react-bootstrap/Container';
 import Jazzicon from 'react-jazzicon';
@@ -39,17 +38,6 @@ const NavBar = (props) => {
             const balance = await web3.current.eth.getBalance(window.ethereum.selectedAddress);
             setBalance((balance / 1000000000000000000).toFixed(3));
             setJazzIconInt(parseInt(window.ethereum.selectedAddress.slice(2, 10), 16));
-            if (params.id) {
-                var campaignContract = new web3.current.eth.Contract(ABI.campaignABI, params.id);
-                campaignContract.events.UserRefunded(async (e) => { })
-                    .on('data', async function (event) {
-                        const balance = await web3.current.eth.getBalance(window.ethereum.selectedAddress);
-                        setBalance((balance / 1000000000000000000).toFixed(3));
-                    })
-                    .on('error', function (error, receipt) {
-                        console.log(error);
-                    });
-            }
         } else {
             setIsConnected(false);
         }
@@ -75,11 +63,7 @@ const NavBar = (props) => {
                     <Navbar.Brand className="cursorP" onClick={() => { navigate("/") }}>decamp</Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Nav>
-                        <Nav.Link>token</Nav.Link>
-                        <Nav.Link>faucet</Nav.Link>
-                        <Nav.Link>mission</Nav.Link>
-                        <Nav.Link>managers</Nav.Link>
-                        <Nav.Link>developers</Nav.Link>
+                        <Nav.Link>pools</Nav.Link>
                     </Nav>
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav>

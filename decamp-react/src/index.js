@@ -7,13 +7,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import "./styling/index.css";
 //import custom components
 import Navbar from './components/navbar';
-import CampaignViewer from './components/campaign_viewer';
-import CampaignList from './components/campaign_list';
-import CampaignEditor from './components/campaign_editor';
 //import bootstrap styling components
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import PoolList from './components/pool_list';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -28,7 +26,7 @@ root.render(
                 <Navbar />
                 <Row>
                   <Col>
-                    <CampaignList />
+                    <PoolList />
                   </Col>
                 </Row>
               </div>
@@ -39,7 +37,7 @@ root.render(
                 <Navbar />
                 <Row>
                   <Col>
-                    <CampaignEditor />
+
                   </Col>
                 </Row>
               </div>
@@ -50,7 +48,7 @@ root.render(
                 <Navbar />
                 <Row>
                   <Col>
-                    <CampaignViewer />
+
                   </Col>
                 </Row>
               </div>
