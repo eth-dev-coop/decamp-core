@@ -24,16 +24,7 @@ const deploy = async () => {
   const accounts = await web3.eth.getAccounts();
 
 
-  const poolResult = await new web3.eth.Contract(compiledManagerPool.abi)
-    .deploy({ data: compiledManagerPool.evm.bytecode.object })
-    .send({ gas: '10000000', from: accounts[0] });
 
-  const result = await new web3.eth.Contract(compiledFactory.abi)
-    .deploy({
-      data: compiledFactory.evm.bytecode.object,
-      arguments: [poolResult.options.address]
-    })
-    .send({ gas: '10000000', from: accounts[0] });
 
 
 };

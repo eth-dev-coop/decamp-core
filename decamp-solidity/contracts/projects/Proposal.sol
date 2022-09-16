@@ -146,7 +146,8 @@ contract Proposal {
             membersPools[0],
             winningBidder,
             creator,
-            ProjectType.FUNDED
+            ProjectType.FUNDED,
+            address(this)
         );
         emit CampaignAssigned();
     }

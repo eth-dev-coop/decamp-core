@@ -13,9 +13,12 @@ contract ProjectFactory is NoDelegateCall {
         address memberPool,
         address leader,
         address op,
-        ProjectType pType
+        ProjectType pType,
+        address proposalAddress
     ) public noDelegateCall {
-        address poolAddress = address(new Project(leader, op, pType));
+        address poolAddress = address(
+            new Project(leader, op, pType, proposalAddress)
+        );
         projects[memberPool].push(poolAddress);
         emit ProjectCreated(msg.sender, poolAddress);
     }

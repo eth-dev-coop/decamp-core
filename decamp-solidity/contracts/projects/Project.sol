@@ -6,17 +6,20 @@ import "./ProjectType.sol";
 contract Project {
     address immutable originalPoster;
     address immutable leaderAddress;
+    address immutable proposalAddress;
     ProjectType public projectType;
     bool public isPrivate;
 
     constructor(
         address _leader,
         address _originalPoster,
-        ProjectType _projectType
+        ProjectType _projectType,
+        address _proposalAddress
     ) {
         leaderAddress = _leader;
         originalPoster = _originalPoster;
         projectType = _projectType;
+        proposalAddress = _proposalAddress;
     }
 
     function addProjectMember(address member) public {}
