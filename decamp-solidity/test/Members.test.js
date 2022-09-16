@@ -77,7 +77,7 @@ async function baseFullSetup() {
     );
 }
 
-describe("Campaign Test Setup", () => {
+describe("Base Test Setup", () => {
 
     before(async () => {
         await baseFullSetup();
@@ -120,7 +120,21 @@ describe("Campaign Test Setup", () => {
     });
 });
 
-describe("Member Pool Project Factory", () => {
+
+describe("Treasury", () => {
+
+    before(async () => {
+        await baseFullSetup();
+    });
+
+    it('did apply applicant fee', async () => {
+        await applicantPool.methods.createApplicant("I am super smart guys.. believe me.")
+            .send({ from: accounts[1], gas: '3404199', value: "" });
+    });
+
+});
+
+describe("Propoal to Project workflow", () => {
 
     before(async () => {
         await baseFullSetup();
@@ -133,6 +147,17 @@ describe("Member Pool Project Factory", () => {
 });
 
 
+describe("Applicant to Member workflow", () => {
+
+    before(async () => {
+        await baseFullSetup();
+    });
+
+    it('did set creator ', async () => {
+
+    });
+
+});
 
 
 // describe("Campaign Factory Contract", () => {

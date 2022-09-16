@@ -67,7 +67,7 @@ const NavBar = (props) => {
                     </Nav>
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav>
-                        <Nav.Link>user profile</Nav.Link>
+                            <Nav.Link>user profile</Nav.Link>
                             <Nav.Link>
                                 {!isConnected &&
                                     <div>

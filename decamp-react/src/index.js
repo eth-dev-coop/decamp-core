@@ -32,7 +32,7 @@ root.render(
               </div>
             )}>
             </Route>
-            <Route path="/editor" element={(
+            <Route path="/pool/:id" element={(
               <div>
                 <Navbar />
                 <Row>
@@ -43,7 +43,29 @@ root.render(
               </div>
             )}>
             </Route>
-            <Route path="/:id" element={(
+            <Route path="/applicant/:id" element={(
+              <div>
+                <Navbar />
+                <Row>
+                  <Col>
+
+                  </Col>
+                </Row>
+              </div>
+            )}>
+            </Route>
+            <Route path="/proposals" element={(
+              <div>
+                <Navbar />
+                <Row>
+                  <Col>
+
+                  </Col>
+                </Row>
+              </div>
+            )}>
+            </Route>
+            <Route path="/proposal/:id" element={(
               <div>
                 <Navbar />
                 <Row>

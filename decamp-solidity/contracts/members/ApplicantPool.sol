@@ -21,7 +21,11 @@ contract ApplicantPool {
     address immutable treasuryAddress;
     address private memberPoolAddress;
 
-    constructor(address memberMap, address _parentFactory, address _treasuryAddress) {
+    constructor(
+        address memberMap,
+        address _parentFactory,
+        address _treasuryAddress
+    ) {
         map = MemberMap(memberMap);
         parentFactory = _parentFactory;
         treasuryAddress = _treasuryAddress;
@@ -49,11 +53,14 @@ contract ApplicantPool {
         return applicantList;
     }
 
-    function createApplicant(string calldata reason) public {
+    function createApplicant(string calldata reason) public payable {
         require(
             !map.isMember(msg.sender, memberPoolAddress),
             "Already active member"
         );
+        Treasury t = Treasury(treasuryAddress);
+        uint fee = t.newApplicantFee();
+        require(msg.value >= fee, "New Applicant Fee Required");
         require(!activeApplicants[msg.sender], "Already active applicant");
         require(applicantPoints[msg.sender] > -3, "account rejected");
         applicantWords[msg.sender] = reason;

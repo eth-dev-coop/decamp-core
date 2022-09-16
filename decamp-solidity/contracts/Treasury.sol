@@ -2,34 +2,38 @@
 pragma solidity =0.8.17;
 
 contract Treasury {
-    address public owner;
     uint256 public balance;
 
     uint256 public newApplicantFee = 1000000000000000;
     uint256 public newPoolFee = 1000000000000000;
     uint256 public newProposalFee = 1000000000000000;
 
+    mapping(address => uint256) memberAllocation;
+    mapping(address => bool) memberHasAllocation;
+
+    address governanceAddress;
+
     constructor() {
-        owner = msg.sender;
+        //TODO set governance address
     }
 
-    function setOwner(address newOwner) public {
-        require(msg.sender == owner);
-        owner = newOwner;
+    function setGovernance(address newGovernance) public {
+        require(msg.sender == governanceAddress);
+        governanceAddress = newGovernance;
     }
 
     function setNewApplicantFee(uint256 amount) public {
-        require(msg.sender == owner);
+        require(msg.sender == governanceAddress);
         newApplicantFee = amount;
     }
 
     function setNewPoolFee(uint256 amount) public {
-        require(msg.sender == owner);
+        require(msg.sender == governanceAddress);
         newPoolFee = amount;
     }
 
     function setNewProposalFee(uint256 amount) public {
-        require(msg.sender == owner);
+        require(msg.sender == governanceAddress);
         newProposalFee = amount;
     }
 
@@ -48,10 +52,29 @@ contract Treasury {
         balance += msg.value;
     }
 
-    function withdraw(uint256 amount) public payable {
-        require(msg.sender == owner, "Not the owner");
-        require(amount >= amount);
-        (bool sent, ) = msg.sender.call{value: amount}("");
+    function allocateFunds(address account, uint256 amount) public payable {
+        require(msg.sender == governanceAddress);
+        require(balance >= amount);
+        require(amount > 0);
+        memberAllocation[account] += amount;
+        memberHasAllocation[account] = true;
+    }
+
+    function hasAllocation() public view returns (bool) {
+        return memberHasAllocation[msg.sender];
+    }
+
+    function getMemberAllocation(address member) public view returns (uint256) {
+        return memberAllocation[member];
+    }
+
+    function withdraw() public payable {
+        require(memberHasAllocation[msg.sender]);
+        (bool sent, ) = msg.sender.call{value: memberAllocation[msg.sender]}(
+            ""
+        );
         require(sent, "Transaction Failed");
+        memberAllocation[msg.sender] = 0;
+        memberHasAllocation[msg.sender] = false;
     }
 }
