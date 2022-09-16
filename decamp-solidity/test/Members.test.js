@@ -28,7 +28,6 @@ let treasury;
 
 async function baseSetup() {
     accounts = await web3.eth.getAccounts();
-    treasury = await new web3.eth.Contract()
 
     //Deploy our member map 1
     treasury = await new web3.eth.Contract(treasuryCompiled.abi)
@@ -42,7 +41,7 @@ async function baseSetup() {
 
     //Deploy our member pool factory which will deploy our MemberPool and ApplicantPool 4
     memberPoolFactory = await new web3.eth.Contract(memberPoolFactoryCompiled.abi)
-        .deploy({ data: memberPoolFactoryCompiled.evm.bytecode.object })
+        .deploy({ data: memberPoolFactoryCompiled.evm.bytecode.object, arguments: [treasury.options.address] })
         .send({ from: accounts[1], gas: '6000000' })
 
     //Deploy our Project Factory which creates projects 6
@@ -55,7 +54,7 @@ async function baseSetup() {
         .deploy({ data: ProposalFactoryCompiled.evm.bytecode.object, arguments: [memberMap.options.address, projectFactory.options.address] })
         .send({ from: accounts[1], gas: '4000000' })
 
-    await memberPoolFactory.methods.createMemberPool().send({ from: accounts[0], gas: '5404199' });
+    await memberPoolFactory.methods.createMemberPool("Pool Name").send({ from: accounts[0], gas: '5404199' });
 
     [memberPoolAddress] = await memberPoolFactory.methods.getMemberPools().call();
 
@@ -100,7 +99,7 @@ describe("Campaign Test Setup", () => {
 describe("Member Pool Project Factory", () => {
 
     it('did see creator ', async () => {
-        await memberMap.methods.
+       
     });
 
 });
