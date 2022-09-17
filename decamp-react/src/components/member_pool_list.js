@@ -5,7 +5,6 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { Link, useNavigate } from 'react-router-dom';
-import CampaignListItem from "./campaign_list_item";
 import detectEthereumProvider from '@metamask/detect-provider';
 import Button from 'react-bootstrap/Button';
 
