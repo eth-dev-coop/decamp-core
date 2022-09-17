@@ -12,6 +12,10 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import PoolList from './components/member_pool_list';
+import ProposalList from './components/proposal_list';
+import ProjectList from './components/project_list';
+import ApplicationList from './components/applicant_list';
+import ProposalView from './components/proposal_viewer';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -48,7 +52,7 @@ root.render(
                 <Navbar />
                 <Row>
                   <Col>
-
+                    <ApplicationList />
                   </Col>
                 </Row>
               </div>
@@ -70,7 +74,7 @@ root.render(
                 <Navbar />
                 <Row>
                   <Col>
-
+                    <ProjectList />
                   </Col>
                 </Row>
               </div>
@@ -92,7 +96,7 @@ root.render(
                 <Navbar />
                 <Row>
                   <Col>
-
+                    <ProposalList />
                   </Col>
                 </Row>
               </div>
@@ -103,7 +107,7 @@ root.render(
                 <Navbar />
                 <Row>
                   <Col>
-
+                    <ProposalView />
                   </Col>
                 </Row>
               </div>

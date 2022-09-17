@@ -153,6 +153,10 @@ body {
   animation: rotation 1s linear infinite;
 }
 
+.padd {
+  margin: 5%;
+}
+
 @keyframes rotation {
   0% {
     transform: rotate(0deg);

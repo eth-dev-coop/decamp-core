@@ -8,6 +8,7 @@ import Button from 'react-bootstrap/Button';
 import Badge from "react-bootstrap/Badge";
 import { useNavigate, useParams } from 'react-router-dom';
 import detectEthereumProvider from '@metamask/detect-provider';
+import { Link } from "react-router-dom";
 
 const NavBar = (props) => {
 
@@ -64,8 +65,9 @@ const NavBar = (props) => {
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Nav>
                         <Nav.Link>member pools</Nav.Link>
-                        <Nav.Link>proposals</Nav.Link>
-                        <Nav.Link>projects</Nav.Link>
+                        <Nav.Link href="/proposals">proposals</Nav.Link>
+                        <Nav.Link href="/projects">projects</Nav.Link>
+                        <Nav.Link href="/applicants">Applications</Nav.Link>
                     </Nav>
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav>
