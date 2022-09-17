@@ -10,6 +10,7 @@ contract Treasury {
 
     mapping(address => uint256) memberAllocation;
     mapping(address => bool) memberHasAllocation;
+    mapping(address => uint256) poolCreatorTokens;
 
     mapping(address => mapping(address => bool)) applicantFeeRecords;
 
@@ -50,9 +51,21 @@ contract Treasury {
         applicantFeeRecords[msg.sender][pool] = true;
     }
 
-    function payNewPoolFee() public payable {
-        require(msg.value > 0);
+    function payCreatorFee() public payable {
+        require(msg.value > 0, "Fee Amount Required");
+        require(
+            msg.value >= newPoolFee,
+            "Not Enough Funds to pay Fee for creator"
+        );
         balance += msg.value;
+        poolCreatorTokens[msg.sender] += 1;
+    }
+
+    function canCreatePool(address user) public view returns (bool) {}
+
+    function spendOneCreateToken(address user) public {
+        require(poolCreatorTokens[user] > 0);
+        poolCreatorTokens[user] -= 1;
     }
 
     function allocateFunds(address account, uint256 amount) public payable {

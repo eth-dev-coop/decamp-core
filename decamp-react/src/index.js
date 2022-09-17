@@ -11,7 +11,7 @@ import Navbar from './components/navbar';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import PoolList from './components/pool_list';
+import PoolList from './components/member_pool_list';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -43,7 +43,40 @@ root.render(
               </div>
             )}>
             </Route>
+            <Route path="/applicants" element={(
+              <div>
+                <Navbar />
+                <Row>
+                  <Col>
+
+                  </Col>
+                </Row>
+              </div>
+            )}>
+            </Route>
             <Route path="/applicant/:id" element={(
+              <div>
+                <Navbar />
+                <Row>
+                  <Col>
+
+                  </Col>
+                </Row>
+              </div>
+            )}>
+            </Route>
+            <Route path="/projects" element={(
+              <div>
+                <Navbar />
+                <Row>
+                  <Col>
+
+                  </Col>
+                </Row>
+              </div>
+            )}>
+            </Route>
+            <Route path="/project/:id" element={(
               <div>
                 <Navbar />
                 <Row>

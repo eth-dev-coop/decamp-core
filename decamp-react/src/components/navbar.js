@@ -63,7 +63,9 @@ const NavBar = (props) => {
                     <Navbar.Brand className="cursorP" onClick={() => { navigate("/") }}>decamp</Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Nav>
-                        <Nav.Link>pools</Nav.Link>
+                        <Nav.Link>member pools</Nav.Link>
+                        <Nav.Link>proposals</Nav.Link>
+                        <Nav.Link>projects</Nav.Link>
                     </Nav>
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav>

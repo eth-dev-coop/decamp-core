@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import ABI from '../web3/abi.json';
+import ABI from '../../web3/abi.json';
 import Web3 from 'web3';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';

@@ -26,6 +26,7 @@ contract MemberPoolFactory is NoDelegateCall {
         pools.push(poolAddress);
         MemberMap map = MemberMap(memberMapAddress);
         map.addPoolCreator(msg.sender, poolAddress);
+        map.addMemberProject(msg.sender, poolAddress);
         emit MemberPoolCreated(msg.sender, poolAddress);
     }
 

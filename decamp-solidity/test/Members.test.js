@@ -49,7 +49,7 @@ async function baseFullSetup() {
         .deploy({ data: ProposalFactoryCompiled.evm.bytecode.object, arguments: [memberMap.options.address, projectFactory.options.address, treasury.options.address] })
         .send({ from: accounts[1], gas: '4000000' })
 
-    await memberPoolFactory.methods.createMemberPool("Pool Name").send({ from: accounts[0], gas: '5404199' });
+    await memberPoolFactory.methods.createMemberPool("Pool Name").send({ from: accounts[3], gas: '5404199' });
 
     [memberPoolAddress] = await memberPoolFactory.methods.getMemberPools().call();
 
@@ -59,7 +59,7 @@ async function baseFullSetup() {
     );
 
     var applicantPoolAddress = await memberPool.methods.applicantPoolAddress().call();
-   
+
 
     applicantPool = await new web3.eth.Contract(
         applicantPoolCompiled.abi,
@@ -119,6 +119,11 @@ describe("Base Test Setup", () => {
     it('has an instance of proposal', () => {
         assert.ok(proposal.options.address);
     });
+
+    it('pool creator is member', async () => {
+        var isMember = await memberMap.methods.isMember(accounts[3], memberPool.options.address).call();
+        assert.equal(isMember, true);
+    });
 });
 
 
@@ -128,11 +133,9 @@ describe("Treasury", () => {
         await baseFullSetup();
     });
 
-    it('did apply applicant fee', async () => {
-
+    it('did apply applicant fee and create applicant', async () => {
         var memPoolAddFromAppPool = await applicantPool.methods.memberPoolAddress().call();
-        console.log(memPoolAddFromAppPool);
-        console.log(memberPool.options.address);
+        assert.equal(memPoolAddFromAppPool, memberPool.options.address);
         await treasury.methods.payNewApplicantFee(memberPool.options.address).send({ from: accounts[1], gas: '3404199', value: "1000000000000000" });
         var res = await treasury.methods.didPayApplicantFee(accounts[1], memberPool.options.address).call();
         console.log(res);
@@ -140,9 +143,6 @@ describe("Treasury", () => {
         assert.equal(balance, '1000000000000000');
         await applicantPool.methods.createApplicant("I am super smart guys.. believe me.")
             .send({ from: accounts[1], gas: '3404199' });
-
-
-
 
     });
 
@@ -154,9 +154,6 @@ describe("Propoal to Project workflow", () => {
         await baseFullSetup();
     });
 
-    it('did set creator ', async () => {
-
-    });
 
 });
 
@@ -167,9 +164,7 @@ describe("Applicant to Member workflow", () => {
         await baseFullSetup();
     });
 
-    it('did set creator ', async () => {
 
-    });
 
 });
 
