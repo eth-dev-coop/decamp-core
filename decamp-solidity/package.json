@@ -9,7 +9,7 @@
   "scripts": {
     "test": "mocha --timeout 10000"
   },
-  "author": "Kurt Stemmle",
+  "author": "eth-dev-coop",
   "license": "ISC",
   "dependencies": {
     "@truffle/hdwallet-provider": "^2.0.14",

@@ -59,6 +59,7 @@ async function baseFullSetup() {
     );
 
     var applicantPoolAddress = await memberPool.methods.applicantPoolAddress().call();
+   
 
     applicantPool = await new web3.eth.Contract(
         applicantPoolCompiled.abi,
@@ -128,8 +129,21 @@ describe("Treasury", () => {
     });
 
     it('did apply applicant fee', async () => {
+
+        var memPoolAddFromAppPool = await applicantPool.methods.memberPoolAddress().call();
+        console.log(memPoolAddFromAppPool);
+        console.log(memberPool.options.address);
+        await treasury.methods.payNewApplicantFee(memberPool.options.address).send({ from: accounts[1], gas: '3404199', value: "1000000000000000" });
+        var res = await treasury.methods.didPayApplicantFee(accounts[1], memberPool.options.address).call();
+        console.log(res);
+        const balance = await web3.eth.getBalance(treasury.options.address);
+        assert.equal(balance, '1000000000000000');
         await applicantPool.methods.createApplicant("I am super smart guys.. believe me.")
-            .send({ from: accounts[1], gas: '3404199', value: "" });
+            .send({ from: accounts[1], gas: '3404199' });
+
+
+
+
     });
 
 });

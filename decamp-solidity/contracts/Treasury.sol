@@ -11,6 +11,8 @@ contract Treasury {
     mapping(address => uint256) memberAllocation;
     mapping(address => bool) memberHasAllocation;
 
+    mapping(address => mapping(address => bool)) applicantFeeRecords;
+
     address governanceAddress;
 
     constructor() {
@@ -42,9 +44,10 @@ contract Treasury {
         balance += msg.value;
     }
 
-    function payNewApplicantFee() public payable {
+    function payNewApplicantFee(address pool) public payable {
         require(msg.value > 0);
         balance += msg.value;
+        applicantFeeRecords[msg.sender][pool] = true;
     }
 
     function payNewPoolFee() public payable {
@@ -57,7 +60,16 @@ contract Treasury {
         require(balance >= amount);
         require(amount > 0);
         memberAllocation[account] += amount;
+        balance -= amount;
         memberHasAllocation[account] = true;
+    }
+
+    function didPayApplicantFee(address person, address pool)
+        public
+        view
+        returns (bool)
+    {
+        return applicantFeeRecords[person][pool];
     }
 
     function hasAllocation() public view returns (bool) {

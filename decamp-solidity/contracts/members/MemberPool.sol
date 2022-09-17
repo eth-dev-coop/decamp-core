@@ -23,13 +23,14 @@ contract MemberPool {
     address immutable creator;
 
     constructor(
-        address _applicantPoolAddress,
         address _creator,
-        string memory _name
+        string memory _name,
+        address treasury,
+        address memMap
     ) {
-        applicantPoolAddress = _applicantPoolAddress;
         creator = _creator;
         name = _name;
+        applicantPoolAddress = address(new ApplicantPool(treasury, memMap, address(this)));
     }
 
     modifier memberOnly(address sender) {

@@ -17,18 +17,17 @@ contract ApplicantPool {
     mapping(address => string) applicantWords;
     mapping(address => uint256) voteEndTime;
     MemberMap map;
-    address immutable parentFactory;
     address immutable treasuryAddress;
-    address private memberPoolAddress;
+    address public memberPoolAddress;
 
     constructor(
         address memberMap,
-        address _parentFactory,
-        address _treasuryAddress
+        address _treasuryAddress,
+        address _memberPoolAddress
     ) {
         map = MemberMap(memberMap);
-        parentFactory = _parentFactory;
         treasuryAddress = _treasuryAddress;
+        memberPoolAddress = _memberPoolAddress;
     }
 
     modifier memberOnly(address sender) {
@@ -58,11 +57,14 @@ contract ApplicantPool {
             !map.isMember(msg.sender, memberPoolAddress),
             "Already active member"
         );
+
         Treasury t = Treasury(treasuryAddress);
-        uint fee = t.newApplicantFee();
-        require(msg.value >= fee, "New Applicant Fee Required");
+        bool didPayFee = t.didPayApplicantFee(msg.sender, memberPoolAddress);
+
+        require(didPayFee == true, "New Applicant Fee Required");
         require(!activeApplicants[msg.sender], "Already active applicant");
         require(applicantPoints[msg.sender] > -3, "account rejected");
+
         applicantWords[msg.sender] = reason;
         applicantList.push(msg.sender);
         voteEndTime[msg.sender] = block.timestamp + 259200000; //3 days
@@ -136,9 +138,5 @@ contract ApplicantPool {
         }
         applicantList[index] = applicantList[applicantList.length - 1];
         applicantList.pop();
-    }
-
-    function setMemberPoolAddress(address _memberPoolAddress) public {
-        memberPoolAddress = _memberPoolAddress;
     }
 }

@@ -20,11 +20,8 @@ contract MemberPoolFactory is NoDelegateCall {
     }
 
     function createMemberPool(string memory name) public noDelegateCall {
-        address applicantPoolAddress = address(
-            new ApplicantPool(memberMapAddress, address(this), treasuryAddress)
-        );
         address poolAddress = address(
-            new MemberPool(applicantPoolAddress, msg.sender, name)
+            new MemberPool( msg.sender, name, memberMapAddress, treasuryAddress)
         );
         pools.push(poolAddress);
         MemberMap map = MemberMap(memberMapAddress);
