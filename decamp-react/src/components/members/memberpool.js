@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import Web3 from 'web3';
-import ABI from '../web3/abi.json';
+import ABI from '../../web3/abi.json';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';

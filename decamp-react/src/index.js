@@ -11,11 +11,12 @@ import Navbar from './components/navbar';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import PoolList from './components/member_pool_list';
-import ProposalList from './components/proposal_list';
-import ProjectList from './components/project_list';
-import ApplicationList from './components/applicant_list';
-import ProposalView from './components/proposal_viewer';
+import PoolList from './components/members/member_pool_list';
+import ProposalList from './components/projects/proposal_list';
+import ProjectList from './components/projects/project_list';
+import ApplicationList from './components/members/applicant_list';
+import ProposalView from './components/projects/proposal';
+import Treasury from './components/treasury';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -31,6 +32,17 @@ root.render(
                 <Row>
                   <Col>
                     <PoolList />
+                  </Col>
+                </Row>
+              </div>
+            )}>
+            </Route>
+            <Route path="/treasury" element={(
+              <div>
+                <Navbar />
+                <Row>
+                  <Col>
+                    <Treasury />
                   </Col>
                 </Row>
               </div>

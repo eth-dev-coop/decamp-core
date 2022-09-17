@@ -128,7 +128,7 @@ describe("Base Test Setup", () => {
 });
 
 
-describe("Treasury", () => {
+describe("Applicant Workflow", () => {
 
     before(async () => {
         await baseFullSetup();
@@ -147,14 +147,19 @@ describe("Treasury", () => {
 
     });
 
+
+    it('did admit applicant', async () => {
+
+    });
+
+
 });
 
-describe("Propoal to Project workflow", () => {
+describe("Proposal Workflow", () => {
 
     before(async () => {
         await baseFullSetup();
     });
-
 
 });
 
@@ -166,66 +171,65 @@ describe("Applicant to Member workflow", () => {
     });
 
 
-
 });
 
 
-// describe("Campaign Factory Contract", () => {
+// describe("proposal Factory Contract", () => {
 
 //     before(async () => {
 //         await baseSetup();
 //     });
 
-//     it('can get deployed campaign', async () => {
-//         const campaignsR = await factory.methods.getDeployedCampaigns().call();
-//         assert.equal(campaignsR.length, 1);
+//     it('can get deployed proposal', async () => {
+//         const proposalsR = await factory.methods.getDeployedproposals().call();
+//         assert.equal(proposalsR.length, 1);
 //     });
 
-//     it('can get active campaign', async () => {
-//         const campaignsR = await factory.methods.getActiveCampaigns().call();
-//         assert.equal(campaignsR.length, 1);
+//     it('can get active proposal', async () => {
+//         const proposalsR = await factory.methods.getActiveproposals().call();
+//         assert.equal(proposalsR.length, 1);
 //     });
 
-//     it('can remove active campaign', async () => {
-//         await factory.methods.removeActiveCampaign(0).send({ from: accounts[0], gas: '1000000' });
-//         const campaignsR = await factory.methods.getActiveCampaigns().call();
-//         assert.equal(campaignsR.length, 0);
+//     it('can remove active proposal', async () => {
+//         await factory.methods.removeActiveproposal(0).send({ from: accounts[0], gas: '1000000' });
+//         const proposalsR = await factory.methods.getActiveproposals().call();
+//         assert.equal(proposalsR.length, 0);
 //     });
 
 // });
 
 
-// describe("Manager Pool Contract", () => {
+// describe("member Pool Contract", () => {
 
 //     before(async () => {
 //         await baseSetup();
-//         await managerPool.methods.createManager().send({ from: accounts[3], gas: '3000000' });
-//         await managerPool.methods.createManager().send({ from: accounts[4], gas: '3000000' });
-//         await managerPool.methods.createManager().send({ from: accounts[5], gas: '3000000' });
+//         await memberPool.methods.createmember().send({ from: accounts[3], gas: '3000000' });
+//         await memberPool.methods.createmember().send({ from: accounts[4], gas: '3000000' });
+//         await memberPool.methods.createmember().send({ from: accounts[5], gas: '3000000' });
 //     });
 
-//     it('has managers in pool', async () => {
-//         const managersR = await managerPool.methods.getManagers().call();
-//         assert.equal(managersR.length, 3);
+//     it('has members in pool', async () => {
+//         const membersR = await memberPool.methods.getmembers().call();
+//         assert.equal(membersR.length, 3);
 //     });
 
-//     it('can reward manager', async () => {
-//         var pointsAtStart = await managerPool.methods.getManagerPoints(accounts[3]).call();
-//         await managerPool.methods.rewardManager(accounts[3]).send({ from: accounts[4], gas: '3000000' });
-//         var pointsAfter = await managerPool.methods.getManagerPoints(accounts[3]).call();
+//     it('can reward member', async () => {
+//         var pointsAtStart = await memberPool.methods.getmemberPoints(accounts[3]).call();
+//         await memberPool.methods.rewardmember(accounts[3]).send({ from: accounts[4], gas: '3000000' });
+//         var pointsAfter = await memberPool.methods.getmemberPoints(accounts[3]).call();
 //         assert.equal(pointsAtStart < pointsAfter, true);
 //     });
 
-//     it('can punish manager', async () => {
-//         var pointsAtStart = await managerPool.methods.getManagerPoints(accounts[3]).call();
-//         await managerPool.methods.punishManager(accounts[3]).send({ from: accounts[4], gas: '3000000' });
-//         var pointsAfter = await managerPool.methods.getManagerPoints(accounts[3]).call();
+//     it('can punish member', async () => {
+//         var pointsAtStart = await memberPool.methods.getmemberPoints(accounts[3]).call();
+//         await memberPool.methods.punishmember(accounts[3]).send({ from: accounts[4], gas: '3000000' });
+//         var pointsAfter = await memberPool.methods.getmemberPoints(accounts[3]).call();
 //         assert.equal(pointsAtStart > pointsAfter, true);
 //     });
 
-//     it('cannot punish manager twice', async () => {
+//     it('cannot punish member twice', async () => {
 //         try {
-//             await managerPool.methods.punishManager(accounts[4]).send({ from: accounts[4], gas: '3000000' });
+//             await memberPool.methods.punishmember(accounts[4]).send({ from: accounts[4], gas: '3000000' });
 //             assert.fail();
 //         } catch (ex) {
 //             assert.ok(ex);
@@ -233,9 +237,9 @@ describe("Applicant to Member workflow", () => {
 
 //     });
 
-//     it('cannot reward manager twice', async () => {
+//     it('cannot reward member twice', async () => {
 //         try {
-//             await managerPool.methods.rewardManager(accounts[3]).send({ from: accounts[4], gas: '3000000' });
+//             await memberPool.methods.rewardmember(accounts[3]).send({ from: accounts[4], gas: '3000000' });
 //             assert.fail();
 //         } catch (ex) {
 //             assert.ok(ex);
@@ -245,108 +249,108 @@ describe("Applicant to Member workflow", () => {
 
 // });
 
-// describe("Campaign Contract", () => {
+// describe("proposal Contract", () => {
 
 
 //     before(async () => {
 
 //         await baseSetup();
 
-//         await managerPool.methods.createManager().send({ from: accounts[3], gas: '3000000' });
-//         await managerPool.methods.createManager().send({ from: accounts[4], gas: '3000000' });
-//         await managerPool.methods.createManager().send({ from: accounts[5], gas: '3000000' });
+//         await memberPool.methods.createmember().send({ from: accounts[3], gas: '3000000' });
+//         await memberPool.methods.createmember().send({ from: accounts[4], gas: '3000000' });
+//         await memberPool.methods.createmember().send({ from: accounts[5], gas: '3000000' });
 
-//         await campaign.methods.contribute().send({ from: accounts[0], gas: '1000000', value: '20000' });
-//         await campaign.methods.contribute().send({ from: accounts[1], gas: '1000000', value: '10000' });
-//         await campaign.methods.contribute().send({ from: accounts[2], gas: '1000000', value: '1000' });
-//         await campaign.methods.contribute().send({ from: accounts[3], gas: '1000000', value: '40000' });
-//         await campaign.methods.contribute().send({ from: accounts[4], gas: '1000000', value: '50000' });
+//         await proposal.methods.contribute().send({ from: accounts[0], gas: '1000000', value: '20000' });
+//         await proposal.methods.contribute().send({ from: accounts[1], gas: '1000000', value: '10000' });
+//         await proposal.methods.contribute().send({ from: accounts[2], gas: '1000000', value: '1000' });
+//         await proposal.methods.contribute().send({ from: accounts[3], gas: '1000000', value: '40000' });
+//         await proposal.methods.contribute().send({ from: accounts[4], gas: '1000000', value: '50000' });
 
-//         await campaign.methods.submitProposal("This is my proposal.. It is very good.", '500')
+//         await proposal.methods.submitProposal("This is my proposal.. It is very good.", '500')
 //             .send({ from: accounts[3], gas: '1000000' });
 
-//         await campaign.methods.submitProposal("This is my proposal.. It is very good.", '400')
+//         await proposal.methods.submitProposal("This is my proposal.. It is very good.", '400')
 //             .send({ from: accounts[4], gas: '1000000' });
 
-//         await campaign.methods.submitProposal("This is my proposal.. It is very good.", '750')
+//         await proposal.methods.submitProposal("This is my proposal.. It is very good.", '750')
 //             .send({ from: accounts[5], gas: '1000000' });
 
 
-//         await campaign.methods.voteOnProposal(accounts[4]).send({ from: accounts[5], gas: '1000000' });
-//         await campaign.methods.voteOnProposal(accounts[4]).send({ from: accounts[4], gas: '1000000' });
-//         await campaign.methods.voteOnProposal(accounts[4]).send({ from: accounts[3], gas: '1000000' });
-//         await campaign.methods.voteOnProposal(accounts[3]).send({ from: accounts[1], gas: '1000000' });
+//         await proposal.methods.voteOnProposal(accounts[4]).send({ from: accounts[5], gas: '1000000' });
+//         await proposal.methods.voteOnProposal(accounts[4]).send({ from: accounts[4], gas: '1000000' });
+//         await proposal.methods.voteOnProposal(accounts[4]).send({ from: accounts[3], gas: '1000000' });
+//         await proposal.methods.voteOnProposal(accounts[3]).send({ from: accounts[1], gas: '1000000' });
 
 //     });
 
-//     it('can contribute to campaign', async () => {
-//         const balance = await web3.eth.getBalance(campaignAddress);
+//     it('can contribute to proposal', async () => {
+//         const balance = await web3.eth.getBalance(proposalAddress);
 //         assert.equal(balance, '121000');
 //     })
 
 //     it('did set leader as eligible', async () => {
-//         var isEli = await campaign.methods.leaderIsEligible().call();
+//         var isEli = await proposal.methods.leaderIsEligible().call();
 //         assert.equal(isEli, true);
 //     });
 
 //     it('did contribute', async () => {
-//         var response = await campaign.methods.isContributor(accounts[4]).call();
+//         var response = await proposal.methods.isContributor(accounts[4]).call();
 //         assert.equal(response, true);
 //     })
 
-//     it('allows managers to apply', async () => {
-//         const managers = await campaign.methods.getProposals().call();
-//         assert.equal(managers.length, 3);
+//     it('allows members to apply', async () => {
+//         const members = await proposal.methods.getProposals().call();
+//         assert.equal(members.length, 3);
 //     });
 
-//     it('can vote for manager', async () => {
-//         const votes = await campaign.methods.getVotesForManager(accounts[4]).call();
+//     it('can vote for member', async () => {
+//         const votes = await proposal.methods.getVotesFormember(accounts[4]).call();
 //         assert.equal(votes, 3);
 //     });
 
-//     it('does not let user vote twice for manager', async () => {
+//     it('does not let user vote twice for member', async () => {
 //         try {
-//             await campaign.methods.voteOnProposal(accounts[4]).send({ from: accounts[5], gas: '1000000' });
+//             await proposal.methods.voteOnProposal(accounts[4]).send({ from: accounts[5], gas: '1000000' });
 //             assert.fail();
 //         } catch (ex) {
 //             assert.ok(ex);
 //         }
 //     });
 
-//     it('selects new manager', async () => {
+//     it('selects new member', async () => {
 
-//         await campaign.methods.assignCampaign().send({ from: accounts[5], gas: '1000000' });
-//         const manager = await campaign.methods.manager().call();
-//         assert.equal(manager, accounts[4]);
-//         const state = await campaign.methods.campaignState().call();
+//         await proposal.methods.assignproposal().send({ from: accounts[5], gas: '1000000' });
+//         const member = await proposal.methods.member().call();
+//         assert.equal(member, accounts[4]);
+//         const state = await proposal.methods.proposalState().call();
 //         assert.equal(state, 1);
 
 
 //     });
 
-//     it('fails when none managers tries to withdrawl funds', async () => {
+//     it('fails when none members tries to withdrawl funds', async () => {
 //         try {
-//             await campaign.methods.withdrawalFunds().send({ from: accounts[1], gas: '1000000' });
+//             await proposal.methods.withdrawalFunds().send({ from: accounts[1], gas: '1000000' });
 //             assert.fail();
 //         } catch (ex) {
 //             assert.ok(ex);
 //         }
-//         const state = await campaign.methods.campaignState().call();
+//         const state = await proposal.methods.proposalState().call();
 //         assert.equal(state, 1);
 //     });
 
-//     it('allows managers to withdrawl funds', async () => {
+//     it('allows members to withdrawl funds', async () => {
 //         const firstBalance = await web3.eth.getBalance(accounts[4]);
-//         var manager = await campaign.methods.manager().call();
-//         await campaign.methods.withdrawalFunds().send({ from: accounts[4], gas: '1000000' });
+//         var member = await proposal.methods.member().call();
+//         await proposal.methods.withdrawalFunds().send({ from: accounts[4], gas: '1000000' });
 //         const secondBalance = await web3.eth.getBalance(accounts[4]);
 //         assert.notEqual(firstBalance, secondBalance);
-//         const state = await campaign.methods.campaignState().call();
+//         const state = await proposal.methods.proposalState().call();
 //     });
 
-//     it('can can halt campaign', async () => {
-//         await campaign.methods.haltCampaign().send({ from: accounts[4], gas: '1000000' });
-//         const state = await campaign.methods.campaignState().call();
+//     it('can can halt proposal', async () => {
+//         await proposal.methods.haltproposal().send({ from: accounts[4], gas: '1000000' });
+//         const state = await proposal.methods.proposalState().call();
 //         assert.equal(state, 3);
 //     });
 
@@ -355,47 +359,47 @@ describe("Applicant to Member workflow", () => {
 
 
 
-// describe("Campaign Contract More", () => {
+// describe("proposal Contract More", () => {
 
 
 //     before(async () => {
 //         await baseSetup();
 
-//         await managerPool.methods.createManager().send({ from: accounts[3], gas: '3000000' });
-//         await managerPool.methods.createManager().send({ from: accounts[4], gas: '3000000' });
-//         await managerPool.methods.createManager().send({ from: accounts[5], gas: '3000000' });
+//         await memberPool.methods.createmember().send({ from: accounts[3], gas: '3000000' });
+//         await memberPool.methods.createmember().send({ from: accounts[4], gas: '3000000' });
+//         await memberPool.methods.createmember().send({ from: accounts[5], gas: '3000000' });
 
-//         await campaign.methods.contribute().send({ from: accounts[0], gas: '1000000', value: '2000' });
+//         await proposal.methods.contribute().send({ from: accounts[0], gas: '1000000', value: '2000' });
 //         await logBalance();
-//         await campaign.methods.contribute().send({ from: accounts[1], gas: '1000000', value: '1000' });
+//         await proposal.methods.contribute().send({ from: accounts[1], gas: '1000000', value: '1000' });
 //         await logBalance();
-//         await campaign.methods.contribute().send({ from: accounts[2], gas: '1000000', value: '100' });
+//         await proposal.methods.contribute().send({ from: accounts[2], gas: '1000000', value: '100' });
 //         await logBalance();
-//         await campaign.methods.contribute().send({ from: accounts[3], gas: '1000000', value: '400' });
+//         await proposal.methods.contribute().send({ from: accounts[3], gas: '1000000', value: '400' });
 //         await logBalance();
-//         await campaign.methods.contribute().send({ from: accounts[4], gas: '1000000', value: '50000' });
+//         await proposal.methods.contribute().send({ from: accounts[4], gas: '1000000', value: '50000' });
 //         await logBalance();
 
-//         await campaign.methods.submitProposal("This is my proposal.. It is very good.", '500')
+//         await proposal.methods.submitProposal("This is my proposal.. It is very good.", '500')
 //             .send({ from: accounts[3], gas: '1000000' });
 
-//         await campaign.methods.submitProposal("This is my proposal.. It is very good.", '400')
+//         await proposal.methods.submitProposal("This is my proposal.. It is very good.", '400')
 //             .send({ from: accounts[4], gas: '1000000' });
 
-//         await campaign.methods.submitProposal("This is my proposal.. It is very good.", '750')
+//         await proposal.methods.submitProposal("This is my proposal.. It is very good.", '750')
 //             .send({ from: accounts[5], gas: '1000000' });
 
 
-//         await campaign.methods.voteOnProposal(accounts[4]).send({ from: accounts[5], gas: '1000000' });
-//         await campaign.methods.voteOnProposal(accounts[4]).send({ from: accounts[3], gas: '1000000' });
-//         await campaign.methods.voteOnProposal(accounts[3]).send({ from: accounts[1], gas: '1000000' });
+//         await proposal.methods.voteOnProposal(accounts[4]).send({ from: accounts[5], gas: '1000000' });
+//         await proposal.methods.voteOnProposal(accounts[4]).send({ from: accounts[3], gas: '1000000' });
+//         await proposal.methods.voteOnProposal(accounts[3]).send({ from: accounts[1], gas: '1000000' });
 //     });
 
 
 
 //     it('user can get refund', async () => {
 //         await logBalance();
-//         await campaign.methods.refund().send({ from: accounts[0], gas: '1000000' });
+//         await proposal.methods.refund().send({ from: accounts[0], gas: '1000000' });
 //         await logBalance();
 //     });
 
@@ -404,7 +408,7 @@ describe("Applicant to Member workflow", () => {
 //     });
 
 
-//     it('can get manager description', async () => {
+//     it('can get member description', async () => {
 //         // assert.fail();
 //     });
 
@@ -412,35 +416,35 @@ describe("Applicant to Member workflow", () => {
 // });
 
 
-// describe("Campaign Contract More", () => {
+// describe("proposal Contract More", () => {
 
 
 //     before(async () => {
 //         await baseSetup();
 
-//         await managerPool.methods.createManager().send({ from: accounts[3], gas: '3000000' });
-//         await managerPool.methods.createManager().send({ from: accounts[4], gas: '3000000' });
-//         await managerPool.methods.createManager().send({ from: accounts[5], gas: '3000000' });
+//         await memberPool.methods.createmember().send({ from: accounts[3], gas: '3000000' });
+//         await memberPool.methods.createmember().send({ from: accounts[4], gas: '3000000' });
+//         await memberPool.methods.createmember().send({ from: accounts[5], gas: '3000000' });
 
-//         await campaign.methods.contribute().send({ from: accounts[0], gas: '1000000', value: '2000' });
-//         await campaign.methods.contribute().send({ from: accounts[1], gas: '1000000', value: '1000' });
-//         await campaign.methods.contribute().send({ from: accounts[2], gas: '1000000', value: '100' });
-//         await campaign.methods.contribute().send({ from: accounts[3], gas: '1000000', value: '400' });
-//         await campaign.methods.contribute().send({ from: accounts[4], gas: '1000000', value: '500' });
+//         await proposal.methods.contribute().send({ from: accounts[0], gas: '1000000', value: '2000' });
+//         await proposal.methods.contribute().send({ from: accounts[1], gas: '1000000', value: '1000' });
+//         await proposal.methods.contribute().send({ from: accounts[2], gas: '1000000', value: '100' });
+//         await proposal.methods.contribute().send({ from: accounts[3], gas: '1000000', value: '400' });
+//         await proposal.methods.contribute().send({ from: accounts[4], gas: '1000000', value: '500' });
 
-//         await campaign.methods.submitProposal("This is my proposal.. It is very good.", '500')
+//         await proposal.methods.submitProposal("This is my proposal.. It is very good.", '500')
 //             .send({ from: accounts[3], gas: '1000000' });
 
-//         await campaign.methods.submitProposal("This is my proposal.. It is very good.", '400')
+//         await proposal.methods.submitProposal("This is my proposal.. It is very good.", '400')
 //             .send({ from: accounts[4], gas: '1000000' });
 
-//         await campaign.methods.submitProposal("This is my proposal.. It is very good.", '750')
+//         await proposal.methods.submitProposal("This is my proposal.. It is very good.", '750')
 //             .send({ from: accounts[5], gas: '1000000' });
 
 
-//         await campaign.methods.voteOnProposal(accounts[4]).send({ from: accounts[5], gas: '1000000' });
-//         await campaign.methods.voteOnProposal(accounts[4]).send({ from: accounts[3], gas: '1000000' });
-//         await campaign.methods.voteOnProposal(accounts[3]).send({ from: accounts[1], gas: '1000000' });
+//         await proposal.methods.voteOnProposal(accounts[4]).send({ from: accounts[5], gas: '1000000' });
+//         await proposal.methods.voteOnProposal(accounts[4]).send({ from: accounts[3], gas: '1000000' });
+//         await proposal.methods.voteOnProposal(accounts[3]).send({ from: accounts[1], gas: '1000000' });
 
 
 //     });
