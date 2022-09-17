@@ -20,7 +20,7 @@ contract MemberMap {
         pools[atIndex + 1] = temp;
     }
 
-    function addMember(address memberPool, address member) public {
+    function addMember(address member, address memberPool) public {
         memberMap[member][memberPool] = true;
         memberPools[member].push(memberPool);
     }

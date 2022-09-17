@@ -31,14 +31,14 @@ async function baseFullSetup() {
 
     treasury = await new web3.eth.Contract(treasuryCompiled.abi)
         .deploy({ data: treasuryCompiled.evm.bytecode.object })
-        .send({ from: accounts[1], gas: '1000000' })
+        .send({ from: accounts[1], gas: '2000000' })
 
     memberMap = await new web3.eth.Contract(memberMapCompiled.abi)
         .deploy({ data: memberMapCompiled.evm.bytecode.object })
         .send({ from: accounts[1], gas: '2000000' })
 
     memberPoolFactory = await new web3.eth.Contract(memberPoolFactoryCompiled.abi)
-        .deploy({ data: memberPoolFactoryCompiled.evm.bytecode.object, arguments: [treasury.options.address] })
+        .deploy({ data: memberPoolFactoryCompiled.evm.bytecode.object, arguments: [treasury.options.address, memberMap.options.address] })
         .send({ from: accounts[1], gas: '6000000' })
 
     projectFactory = await new web3.eth.Contract(projectFactoryCompiled.abi)
@@ -124,6 +124,7 @@ describe("Base Test Setup", () => {
         var isMember = await memberMap.methods.isMember(accounts[3], memberPool.options.address).call();
         assert.equal(isMember, true);
     });
+
 });
 
 

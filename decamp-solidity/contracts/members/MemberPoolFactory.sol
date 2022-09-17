@@ -13,9 +13,9 @@ contract MemberPoolFactory is NoDelegateCall {
     address immutable memberMapAddress;
     address immutable treasuryAddress;
 
-    constructor(address _treasuryAddress) {
+    constructor(address _treasuryAddress, address _memberMap) {
         owner = msg.sender;
-        memberMapAddress = address(new MemberMap());
+        memberMapAddress = _memberMap;
         treasuryAddress = _treasuryAddress;
     }
 
@@ -26,7 +26,7 @@ contract MemberPoolFactory is NoDelegateCall {
         pools.push(poolAddress);
         MemberMap map = MemberMap(memberMapAddress);
         map.addPoolCreator(msg.sender, poolAddress);
-        map.addMemberProject(msg.sender, poolAddress);
+        map.addMember(msg.sender, poolAddress);
         emit MemberPoolCreated(msg.sender, poolAddress);
     }
 
