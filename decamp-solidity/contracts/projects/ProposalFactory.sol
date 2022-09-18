@@ -18,7 +18,7 @@ contract ProposalFactory is NoDelegateCall {
         projectFactoryAddress = _projectFactoryAddress;
     }
 
-    function createProposal(string calldata description) public payable noDelegateCall {
+    function createProposal(string calldata description) public noDelegateCall {
         address proposalAddress = address(
             new Proposal(
                 msg.sender,

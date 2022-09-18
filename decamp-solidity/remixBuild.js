@@ -1,8 +1,6 @@
 const path = require("path");
 const fs = require('fs');
 
-const { Console } = require("console");
-
 const memberPoolFactoryPath = path.resolve(__dirname, "contracts/members", "MemberPoolFactory.sol");
 const memberPoolFactorySource = fs.readFileSync(memberPoolFactoryPath, "utf8");
 
@@ -33,8 +31,6 @@ const proposalSource = fs.readFileSync(proposalPath, "utf8");
 const noDelegate = path.resolve(__dirname, "contracts/lib", "NoDelegateCall.sol");
 const noDelegateSource = fs.readFileSync(noDelegate, "utf8");
 
-const treasuryPath = path.resolve(__dirname, "contracts", "Treasury.sol");
-const treasurySource = fs.readFileSync(treasuryPath, "utf8");
 
 const buildPath = path.resolve(__dirname, 'build/text.sol');
 
@@ -64,11 +60,6 @@ fs.appendFile(buildPath, memberMapSource, err => {
 });
 
 
-fs.appendFile(buildPath, treasurySource, err => {
-    if (err) {
-        console.error(err);
-    }
-});
 
 
 fs.appendFile(buildPath, applicationPoolSource, err => {
@@ -98,9 +89,6 @@ fs.appendFile(buildPath, projectTypeSource, err => {
         console.error(err);
     }
 });
-
-
-
 
 
 fs.appendFile(buildPath, proposalFactorySource, err => {

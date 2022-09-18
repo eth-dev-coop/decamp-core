@@ -14,7 +14,7 @@ contract MemberMap {
     address[] public pools;
 
     function poolUpOne(uint256 atIndex) public {
-        require(atIndex > pools.length);
+        require(atIndex > pools.length, "Index out of range");
         address temp = pools[atIndex];
         pools[atIndex] = pools[atIndex + 1];
         pools[atIndex + 1] = temp;

@@ -14,7 +14,6 @@ contract ApplicantPool {
     mapping(address => int256) applicantPoints;
     mapping(address => bool) activeApplicants;
     mapping(address => string) applicantWords;
-    mapping(address => uint256) voteEndTime;
     MemberMap map;
     address public memberPoolAddress;
     uint256 public balance;
@@ -59,7 +58,6 @@ contract ApplicantPool {
         applicantWords[msg.sender] = reason;
         activeApplicants[msg.sender] = true;
         applicantList.push(msg.sender);
-        voteEndTime[msg.sender] = block.timestamp + 259200000; //3 days
     }
 
     function voteForApplicant(address applicant) public memberOnly(msg.sender) {
@@ -75,14 +73,6 @@ contract ApplicantPool {
         applicantPoints[applicant] += 1;
     }
 
-    function getApplicantVoteEndDate(address applicant)
-        public
-        view
-        returns (uint256)
-    {
-        return voteEndTime[applicant];
-    }
-
     function getApplicantWords(address applicant)
         public
         view
@@ -93,7 +83,7 @@ contract ApplicantPool {
     }
 
     function getApplicantVoteCount(address applicant)
-        external
+        public
         view
         returns (uint256)
     {
@@ -104,11 +94,6 @@ contract ApplicantPool {
         public
         memberPoolOnly(msg.sender)
     {
-        require(
-            msg.sender == memberPoolAddress,
-            "This is not the member Pool Address"
-        );
-        map.addMember(memberPoolAddress, applicant);
         _burnApplicant(applicant);
         delete applicantVotes[msg.sender];
     }

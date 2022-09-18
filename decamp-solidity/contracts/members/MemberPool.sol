@@ -10,17 +10,18 @@ contract MemberPool {
     event MemberRewarded(address sender);
     event VoteAgainstMemberStart(address sender);
     event VoteAgainstMemberEnd(address sender);
+
     string public name;
     string public shortSummary;
     string public longSummary;
     address[] public members;
     mapping(address => bool) public memberActive;
     address[] public projects;
-    //members rep props
     mapping(address => address) public userToMemberUp;
     mapping(address => int256) public memberPoints;
     address public applicantPoolAddress;
     address public creator;
+    address public memberMapAddress;
 
     constructor(
         address _creator,
@@ -33,6 +34,8 @@ contract MemberPool {
             new ApplicantPool(memMap, address(this))
         );
         memberActive[creator] = true;
+        members.push(creator);
+        memberMapAddress = memMap;
     }
 
     modifier memberOnly(address sender) {
@@ -84,29 +87,14 @@ contract MemberPool {
     {}
 
     function admitApplicant(address applicant) public memberOnly(msg.sender) {
-        require(applicant != address(0), "");
         ApplicantPool pool = ApplicantPool(applicantPoolAddress);
-
-        uint256 memberCount = getMemberCount();
         uint256 voteCount = pool.getApplicantVoteCount(applicant);
-
-        require(
-            (((voteCount / memberCount) * 100) > 5),
-            "Invalid number of votes or proceed."
-        );
-
+        require((voteCount >= 1), "Invalid number of votes or proceed.");
+        MemberMap map = MemberMap(memberMapAddress);
+        map.addMember(applicant, memberMapAddress);
         pool.approveApplicant(applicant);
-
         members.push(applicant);
         memberActive[applicant] = true;
-    }
-
-    function rejectApplicant(address applicant) public memberOnly(msg.sender) {
-        require(applicant != address(0), "");
-        ApplicantPool pool = ApplicantPool(applicantPoolAddress);
-        uint256 voteEndTime = pool.getApplicantVoteEndDate(applicant);
-        require(voteEndTime > block.timestamp, "To soon to end vote");
-        pool.rejectApplicant(applicant);
     }
 
     function getMemberCount() public view returns (uint256) {
