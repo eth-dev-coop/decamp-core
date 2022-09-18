@@ -210,36 +210,9 @@ describe("Applicant Workflow", () => {
         await proposal.methods.createProject().send({ from: accounts[1], gas: '4000000' });
         const leader = await proposal.methods.leader().call();
         assert.equal(leader, accounts[1]);
-        //const state = await proposal.methods.proposalState().call();
-       // assert.equal(state, 1);
+        const state = await proposal.methods.proposalState().call();
+        assert.equal(state, 2);
     });
-
-    //     it('fails when none members tries to withdrawl funds', async () => {
-    //         try {
-    //             await proposal.methods.withdrawalFunds().send({ from: accounts[1], gas: '1000000' });
-    //             assert.fail();
-    //         } catch (ex) {
-    //             assert.ok(ex);
-    //         }
-    //         const state = await proposal.methods.proposalState().call();
-    //         assert.equal(state, 1);
-    //     });
-
-    //     it('allows members to withdrawl funds', async () => {
-    //         const firstBalance = await web3.eth.getBalance(accounts[4]);
-    //         var member = await proposal.methods.member().call();
-    //         await proposal.methods.withdrawalFunds().send({ from: accounts[4], gas: '1000000' });
-    //         const secondBalance = await web3.eth.getBalance(accounts[4]);
-    //         assert.notEqual(firstBalance, secondBalance);
-    //         const state = await proposal.methods.proposalState().call();
-    //     });
-
-    //     it('can can halt proposal', async () => {
-    //         await proposal.methods.haltproposal().send({ from: accounts[4], gas: '1000000' });
-    //         const state = await proposal.methods.proposalState().call();
-    //         assert.equal(state, 3);
-    //     });
-
 
 
 });

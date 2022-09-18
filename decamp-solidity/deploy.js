@@ -21,10 +21,9 @@ const SECRET_WALLET_KEY = "";
 const INFURA_API = "";
 
 const provider = new HDWalletProvider(
-  SECRET_WALLET_KEY,
-  INFURA_API
+  'world convince crunch cart gaze uphold ship lift dumb beauty useless trust',
+  'https://rinkeby.infura.io/v3/c9ed239e52124e719e00f9f5da961165'
 );
-
 const web3 = new Web3(provider);
 
 const deploy = async () => {

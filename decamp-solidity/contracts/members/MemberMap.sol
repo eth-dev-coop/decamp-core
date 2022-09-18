@@ -43,7 +43,7 @@ contract MemberMap {
         returns (address[] memory)
     {
         {
-            return memberProjects[member];
+            return memberPools[member];
         }
     }
 
