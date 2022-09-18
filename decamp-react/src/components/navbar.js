@@ -64,10 +64,10 @@ const NavBar = (props) => {
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Nav>
                         <Nav.Link href="/">pools</Nav.Link>
-                        <Nav.Link href="/stores">pools</Nav.Link>
+                        <Nav.Link href="/stores">stores</Nav.Link>
                         <Nav.Link href="/proposals">proposals</Nav.Link>
                         <Nav.Link href="/projects">projects</Nav.Link>
-                        <Nav.Link href="/treasury">treasury</Nav.Link>
+                        <Nav.Link href="/treasury">governance</Nav.Link>
                     </Nav>
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav>

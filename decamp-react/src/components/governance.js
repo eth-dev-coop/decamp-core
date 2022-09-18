@@ -1,4 +1,4 @@
-export default function Treasury() {
+export default function Governance() {
     return (
         <div className="loader padd">
         </div>

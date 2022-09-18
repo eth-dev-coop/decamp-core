@@ -11,17 +11,15 @@ contract MemberPoolFactory is NoDelegateCall {
     address public owner;
     address[] public pools;
     address immutable memberMapAddress;
-    address immutable treasuryAddress;
 
-    constructor(address _treasuryAddress, address _memberMap) {
+    constructor(address _memberMap) {
         owner = msg.sender;
         memberMapAddress = _memberMap;
-        treasuryAddress = _treasuryAddress;
     }
 
     function createMemberPool(string memory name) public noDelegateCall {
         address poolAddress = address(
-            new MemberPool( msg.sender, name, memberMapAddress, treasuryAddress)
+            new MemberPool(msg.sender, name, memberMapAddress)
         );
         pools.push(poolAddress);
         MemberMap map = MemberMap(memberMapAddress);

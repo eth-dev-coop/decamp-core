@@ -12,7 +12,6 @@ const ProposalFactoryCompiled = require('../build/ProposalFactory.json');
 const proposalCompiled = require('../build/Proposal.json');
 const projectFactoryCompiled = require('../build/ProjectFactory.json');
 const projectCompiled = require('../build/Project.json');
-const treasuryCompiled = require('../build/Treasury.json');
 
 let accounts;
 
@@ -24,21 +23,16 @@ let proposal;
 let memberMap;
 let projectFactory;
 let project;
-let treasury;
 
 async function baseFullSetup() {
     accounts = await web3.eth.getAccounts();
-
-    treasury = await new web3.eth.Contract(treasuryCompiled.abi)
-        .deploy({ data: treasuryCompiled.evm.bytecode.object })
-        .send({ from: accounts[1], gas: '2000000' })
 
     memberMap = await new web3.eth.Contract(memberMapCompiled.abi)
         .deploy({ data: memberMapCompiled.evm.bytecode.object })
         .send({ from: accounts[1], gas: '2000000' })
 
     memberPoolFactory = await new web3.eth.Contract(memberPoolFactoryCompiled.abi)
-        .deploy({ data: memberPoolFactoryCompiled.evm.bytecode.object, arguments: [treasury.options.address, memberMap.options.address] })
+        .deploy({ data: memberPoolFactoryCompiled.evm.bytecode.object, arguments: [memberMap.options.address] })
         .send({ from: accounts[1], gas: '6000000' })
 
     projectFactory = await new web3.eth.Contract(projectFactoryCompiled.abi)
@@ -46,10 +40,10 @@ async function baseFullSetup() {
         .send({ from: accounts[1], gas: '4000000' })
 
     proposalFactory = await new web3.eth.Contract(ProposalFactoryCompiled.abi)
-        .deploy({ data: ProposalFactoryCompiled.evm.bytecode.object, arguments: [memberMap.options.address, projectFactory.options.address, treasury.options.address] })
+        .deploy({ data: ProposalFactoryCompiled.evm.bytecode.object, arguments: [memberMap.options.address, projectFactory.options.address] })
         .send({ from: accounts[1], gas: '4000000' })
 
-    await memberPoolFactory.methods.createMemberPool("Pool Name").send({ from: accounts[3], gas: '5404199' });
+    await memberPoolFactory.methods.createMemberPool("Pool Name").send({ from: accounts[1], gas: '5404199' });
 
     [memberPoolAddress] = await memberPoolFactory.methods.getMemberPools().call();
 
@@ -68,7 +62,7 @@ async function baseFullSetup() {
 
     await proposalFactory.methods
         .createProposal("Info about prooposal")
-        .send({ from: accounts[0], gas: '3404199' });
+        .send({ from: accounts[1], gas: '3404199' });
 
     [proposalAddress] = await proposalFactory.methods.getProposals().call();
 
@@ -86,10 +80,6 @@ describe("Base Test Setup", () => {
 
     it('has test accounts available', () => {
         assert.ok(accounts.length > 0);
-    });
-
-    it('has an instance of treasury', () => {
-        assert.ok(memberMap.options.address);
     });
 
     it('has an instance of memberMap', () => {
@@ -121,7 +111,7 @@ describe("Base Test Setup", () => {
     });
 
     it('pool creator is member', async () => {
-        var isMember = await memberMap.methods.isMember(accounts[3], memberPool.options.address).call();
+        var isMember = await memberMap.methods.isMember(accounts[1], memberPool.options.address).call();
         assert.equal(isMember, true);
     });
 
@@ -137,19 +127,27 @@ describe("Applicant Workflow", () => {
     it('did apply applicant fee and create applicant', async () => {
         var memPoolAddFromAppPool = await applicantPool.methods.memberPoolAddress().call();
         assert.equal(memPoolAddFromAppPool, memberPool.options.address);
-        await treasury.methods.payNewApplicantFee(memberPool.options.address).send({ from: accounts[1], gas: '3404199', value: "1000000000000000" });
-        var res = await treasury.methods.didPayApplicantFee(accounts[1], memberPool.options.address).call();
-        console.log(res);
-        const balance = await web3.eth.getBalance(treasury.options.address);
-        assert.equal(balance, '1000000000000000');
-        await applicantPool.methods.createApplicant("I am super smart guys.. believe me.")
-            .send({ from: accounts[1], gas: '3404199' });
 
+        await applicantPool.methods.createApplicant("I am super smart guys.. believe me.")
+            .send({ from: accounts[3], gas: '3404199', value: "1000000000000000" });
+
+        const balance = await web3.eth.getBalance(applicantPool.options.address);
+        assert.equal(balance, '1000000000000000');
+
+        var applicants = await memberPool.methods.getApplicants().call({ from: accounts[1] });
+        assert.equal(applicants.length, 1);
     });
 
 
-    it('did admit applicant', async () => {
+    it('can vote on applicant', async () => {
+        await applicantPool.methods.voteForApplicant(accounts[3])
+            .send({ from: accounts[1], gas: '3404199' });
+        var votes = await applicantPool.methods.getApplicantVoteCount(accounts[3]).call({ from: accounts[1] });
+        assert.equal(votes, 1);
+    });
 
+    it('can select that applicant', async () => {
+        //await memberPool.methods.admitApplicant(accounts[3]).send({ from: accounts[1], gas: '3404199' });
     });
 
 

@@ -33,8 +33,6 @@ const proposalSource = fs.readFileSync(proposalPath, "utf8");
 const noDelegate = path.resolve(__dirname, "contracts/lib", "NoDelegateCall.sol");
 const noDelegateSource = fs.readFileSync(noDelegate, "utf8");
 
-const treasuryPath = path.resolve(__dirname, "contracts", "Treasury.sol");
-const treasurySource = fs.readFileSync(treasuryPath, "utf8");
 
 
 var input = {
@@ -66,9 +64,6 @@ var input = {
         },
         'Proposal.sol': {
             content: proposalSource
-        },
-        'Treasury.sol': {
-            content: treasurySource
         }
     },
     settings: {
@@ -86,7 +81,6 @@ fs.removeSync(buildPath);
 
 
 function findImports(path) {
-    if (path === "Treasury.sol") return { contents: `${treasurySource}` };
     if (path === "lib/NoDelegateCall.sol") return { contents: `${noDelegateSource}` };
     if (path === "members/MemberPoolFactory.sol") return { contents: `${memberPoolFactorySource}` };
     if (path === "members/MemberMap.sol") return { contents: `${memberMapSource}` };
@@ -125,14 +119,6 @@ for (let contract in output.contracts["MemberMap.sol"]) {
     fs.outputJsonSync(
         path.resolve(buildPath, contract.replace(':', '') + '.json'),
         output.contracts["MemberMap.sol"][contract]
-    );
-}
-
-
-for (let contract in output.contracts["Treasury.sol"]) {
-    fs.outputJsonSync(
-        path.resolve(buildPath, contract.replace(':', '') + '.json'),
-        output.contracts["Treasury.sol"][contract]
     );
 }
 

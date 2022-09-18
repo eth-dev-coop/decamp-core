@@ -2,7 +2,6 @@
 pragma solidity ^0.8.17;
 
 import "./MemberMap.sol";
-import "../Treasury.sol";
 
 contract ApplicantPool {
     event CreateApplicant();
@@ -17,16 +16,12 @@ contract ApplicantPool {
     mapping(address => string) applicantWords;
     mapping(address => uint256) voteEndTime;
     MemberMap map;
-    address immutable treasuryAddress;
     address public memberPoolAddress;
+    uint256 public balance;
+    uint256 public applicantFeeAmount = 1000000;
 
-    constructor(
-        address memberMap,
-        address _treasuryAddress,
-        address _memberPoolAddress
-    ) {
+    constructor(address memberMap, address _memberPoolAddress) {
         map = MemberMap(memberMap);
-        treasuryAddress = _treasuryAddress;
         memberPoolAddress = _memberPoolAddress;
     }
 
@@ -46,7 +41,7 @@ contract ApplicantPool {
     function getApplicants()
         public
         view
-        memberOnly(msg.sender)
+        memberPoolOnly(msg.sender)
         returns (address[] memory)
     {
         return applicantList;
@@ -57,15 +52,12 @@ contract ApplicantPool {
             !map.isMember(msg.sender, memberPoolAddress),
             "Already active member"
         );
-
-        Treasury t = Treasury(treasuryAddress);
-        bool didPayFee = t.didPayApplicantFee(msg.sender, memberPoolAddress);
-
-        require(didPayFee == true, "New Applicant Fee Required");
         require(!activeApplicants[msg.sender], "Already active applicant");
         require(applicantPoints[msg.sender] > -3, "account rejected");
-
+        require(msg.value >= applicantFeeAmount);
+        balance += msg.value;
         applicantWords[msg.sender] = reason;
+        activeApplicants[msg.sender] = true;
         applicantList.push(msg.sender);
         voteEndTime[msg.sender] = block.timestamp + 259200000; //3 days
     }
@@ -112,7 +104,10 @@ contract ApplicantPool {
         public
         memberPoolOnly(msg.sender)
     {
-        require(msg.sender == memberPoolAddress);
+        require(
+            msg.sender == memberPoolAddress,
+            "This is not the member Pool Address"
+        );
         map.addMember(memberPoolAddress, applicant);
         _burnApplicant(applicant);
         delete applicantVotes[msg.sender];

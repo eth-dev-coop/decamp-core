@@ -12,12 +12,10 @@ contract ProposalFactory is NoDelegateCall {
     address[] public proposals;
     address immutable memberMap;
     address immutable projectFactoryAddress;
-    address immutable treasuryAddress;
 
-    constructor(address map, address _projectFactoryAddress, address _treasuryAddress) {
+    constructor(address map, address _projectFactoryAddress) {
         memberMap = map;
         projectFactoryAddress = _projectFactoryAddress;
-        treasuryAddress = _treasuryAddress;
     }
 
     function createProposal(string calldata description) public payable noDelegateCall {
