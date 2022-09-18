@@ -36,7 +36,7 @@ const deploy = async () => {
     .send({ from: accounts[0], gas: '2000000' })
 
   memberPoolFactory = await new web3.eth.Contract(memberPoolFactoryCompiled.abi)
-    .deploy({ data: memberPoolFactoryCompiled.evm.bytecode.object, arguments: [memberMap.options.address]] })
+    .deploy({ data: memberPoolFactoryCompiled.evm.bytecode.object, arguments: [memberMap.options.address] })
     .send({ from: accounts[0], gas: '6000000' })
 
   projectFactory = await new web3.eth.Contract(projectFactoryCompiled.abi)

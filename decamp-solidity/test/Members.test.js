@@ -54,7 +54,6 @@ async function baseFullSetup() {
 
     var applicantPoolAddress = await memberPool.methods.applicantPoolAddress().call();
 
-
     applicantPool = await new web3.eth.Contract(
         applicantPoolCompiled.abi,
         applicantPoolAddress
